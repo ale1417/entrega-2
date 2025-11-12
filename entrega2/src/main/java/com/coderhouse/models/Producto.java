@@ -1,43 +1,38 @@
 package com.coderhouse.models;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
-import lombok.Data;
-
-@Data
 @Entity
-@Table(name = "Productos")
+@Table(name = "productos")
 public class Producto {
 
-	@Id // Primary Key
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "Nombre", nullable = false)
-	private String nombre;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "curso_alumno", 
-		joinColumns = @JoinColumn(name = "curso_id"), 
-		inverseJoinColumns = @JoinColumn(name = "alumno_id"))
-	@JsonIgnore
-	private List<Cliente> clientes = new ArrayList<>();
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Venta venta;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(nullable = false)
+    private String nombre;
+
+    
+    @Column(nullable = false)
+    private BigDecimal precio;
+
+    
+    @ManyToMany(mappedBy = "productos")
+    private List<Venta> ventas;
+
+    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public BigDecimal getPrecio() { return precio; }
+    public void setPrecio(BigDecimal precio) { this.precio = precio; }
+
+    public List<Venta> getVentas() { return ventas; }
+    public void setVentas(List<Venta> ventas) { this.ventas = ventas; }
 }

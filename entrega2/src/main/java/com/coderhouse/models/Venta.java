@@ -1,42 +1,38 @@
 package com.coderhouse.models;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Entity
-@Table(name = "Ventas")
+@Table(name = "ventas")
 public class Venta {
 
-	@Id // Primary Key
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "Nombre", nullable = false)
-	private String nombre;
-	
-	@OneToMany(mappedBy = "venta", fetch = FetchType.EAGER)
-	@JsonIgnore
-	private List<Producto> productos = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    
+    @ManyToMany
+    @JoinTable(
+        name = "venta_productos",
+        joinColumns = @JoinColumn(name = "venta_id"),
+        inverseJoinColumns = @JoinColumn(name = "producto_id")
+    )
+    private List<Producto> productos = new ArrayList<>();
+
+    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+    public List<Producto> getProductos() { return productos; }
+    public void setProductos(List<Producto> productos) { this.productos = productos; }
 }

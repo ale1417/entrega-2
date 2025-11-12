@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-Clase12Application<clase-12>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.coderhouse.Clase12Application",
+      "projectName": "clase-12",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
