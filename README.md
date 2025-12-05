@@ -81,6 +81,10 @@ mvn spring-boot:run
 
 Generar el JAR:
 
+```bash
+mvn clean package
+```
+
 Ejecutarlo:
 
 ```bash
